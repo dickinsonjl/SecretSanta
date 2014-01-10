@@ -3,6 +3,7 @@
 class Ss {
 
 	private $santas = array();
+	private $taken = array();
 
 
 	public function __construct($numberOfSantas = 0) {
@@ -18,7 +19,7 @@ class Ss {
 		// store available numbers in array
 		$available = array();
 		// store taken numbers from hat in array
-		$taken = array();
+		$this->taken = array();
 		for ($x=0; $x < count($this->santas); $x++) { 
 			$available[] = $x;
 		}
@@ -38,7 +39,7 @@ class Ss {
 				$result = $tempHat[$pick];
 			}
 			// add number to taken
-			$taken[] = $result;
+			$this->taken[] = $result;
 			// remove number from available
 			$key = array_search($result,$available);
 			if($key!==false){
@@ -46,11 +47,25 @@ class Ss {
 			    $available = array_values($available);
 			}
 		}
+		//process last pick
+		if($available[0] == count($this->santas)){
+			//last choice is last santa, swap with random santa
+			$swapWith = mt_rand(0, count($this->taken) - 1);
+			$this->taken[] = $this->taken[$swapWith];
+			$this->taken[$swapWith] = $available[0];
+
+
+		} else {
+			//last pick is not last santa, take that pick
+			$this->taken[] = $available[0];
+			unset($available); // none left
+		}
 	}
 
-
+	public function getRawResult(){
+		print_r($this->taken);
+	}
 }
-
 
 
 ?>
