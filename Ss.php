@@ -8,7 +8,7 @@ class Ss {
 
 	public function __construct($numberOfSantas = 0) {
 		for ($i=0; $i < $numberOfSantas; $i++) { 
-			addSanta($i, $i . '@santa');
+			$this->addSanta($i, $i . '@santa');
 		}
     }
 
